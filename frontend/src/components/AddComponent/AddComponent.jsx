@@ -4,91 +4,47 @@ import "react-toastify/dist/ReactToastify.css";
 import "./AddComponent.css";
 
 function AddComponent() {
-  const [formData, setFormData] = useState({
+  const [allInputFields, setAllInputFields] = useState({
     title: "",
     description: "",
     publish_year: "",
     quantity: "",
   });
-  const [submittedData, setSubmittedData] = useState(null);
-  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setAllInputFields({ ...allInputFields, [name]: value });
   };
+
   const handleSubmit = (e) => {
+    console.log(allInputFields);
     e.preventDefault();
+    const { title, description, publish_year, quantity } = allInputFields;
     const xhr = new XMLHttpRequest();
-    xhr.open("POST", "http://localhost:4000/api/insertbook");
+    xhr.open("POST", "http://localhost:4000/api/insertbook", true);
     xhr.setRequestHeader("Content-Type", "application/json");
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE) {
-        console.log("Response status:", xhr.status);
-        console.log("Response text:", xhr.responseText);
-        if (xhr.status === 201 || xhr.status === 200) {
-          const data = JSON.parse(xhr.responseText);
-          setSubmittedData(data);
-          setFormSubmitted(true);
-          setFormData({
-            title: "",
-            description: "",
-            publish_year: "",
-            quantity: "",
-          });
-          toast.success("Data inserted successfully!", { autoClose: 5000 });
-        } else if (xhr.status === 409) {
-          toast.error("Duplicate ID found. Please choose a different ID.");
-        } else {
-          toast.error(
-            "An error occurred while submitting the form. Please try again later."
-          );
-        }
+    xhr.onprogress = () => {
+      console.log("On Progress...!");
+    };
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        console.log("Data Inserted Successfully");
+        setAllInputFields({
+          title: "",
+          description: "",
+          publish_year: "",
+          quantity: "",
+        });
+      } else {
+        console.log("Enter all Fields", xhr.statusText);
       }
     };
-    xhr.send(JSON.stringify(formData));
+    // xhr.send(JSON.stringify(allInputFields));
+    xhr.send(JSON.stringify({ title, description, publish_year, quantity }));
   };
+
   return (
     <>
-      {/* <div class="input-group">
-        <label for="title">Title:</label>
-        <input
-          type="text"
-          id="title"
-          name="title"
-          placeholder="Enter title..."
-        />
-      </div>
-
-      <div class="input-group">
-        <label for="description">Description:</label>
-        <input
-          type="text"
-          id="description"
-          name="description"
-          placeholder="Enter description..."
-        />
-      </div>
-
-      <div class="input-group">
-        <label for="publish_year">Publish Year:</label>
-        <input
-          type="text"
-          id="publish_year"
-          name="publish_year"
-          placeholder="Enter publish year..."
-        />
-      </div>
-
-      <div class="input-group">
-        <label for="quantity">Quantity:</label>
-        <input
-          type="text"
-          id="quantity"
-          name="quantity"
-          placeholder="Enter quantity..."
-        />
-      </div> */}
-
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <label>
@@ -96,7 +52,7 @@ function AddComponent() {
             <input
               type="text"
               name="title"
-              value={formData.title}
+              value={allInputFields.title}
               onChange={handleChange}
             />
           </label>
@@ -104,7 +60,7 @@ function AddComponent() {
             Description:
             <textarea
               name="description"
-              value={formData.description}
+              value={allInputFields.description}
               onChange={handleChange}
             />
           </label>
@@ -113,7 +69,7 @@ function AddComponent() {
             <input
               type="text"
               name="publish_year"
-              value={formData.publish_year}
+              value={allInputFields.publish_year}
               onChange={handleChange}
             />
           </label>
@@ -122,7 +78,7 @@ function AddComponent() {
             <input
               type="text"
               name="quantity"
-              value={formData.quantity}
+              value={allInputFields.quantity}
               onChange={handleChange}
             />
           </label>

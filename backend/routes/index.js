@@ -25,6 +25,9 @@ const {
   deletegenre,
 } = require("../controllers/genreControllers");
 
+//Common Controller
+const { searchBook } = require("../controllers/commonControllers");
+
 const router = express();
 
 router.get("/", welcome);
@@ -45,5 +48,8 @@ router.get("/genres", displayGenre);
 router.post("/insertgenre", insertgenre);
 router.patch("/updategenre/:id", updategenre);
 router.delete("/deletegenre/:id", deletegenre);
+
+// Common Routes
+router.get("/search", searchBook);
 
 module.exports = router;

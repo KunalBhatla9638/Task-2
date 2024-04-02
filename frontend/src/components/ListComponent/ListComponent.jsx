@@ -36,6 +36,27 @@ function ListComponent() {
   //   xhr.send(null);
   // };
 
+  const deleteRecord = (id) => {
+    const result = confirm(`Do you want to delete id : ${id}`);
+    if (result) {
+      const xhr = new XMLHttpRequest();
+      xhr.open("DELETE", `http://localhost:4000/api/deletebook/${id}`, true);
+      xhr.onload = () => {
+        if (xhr.status === 200) {
+          console.log("Deleted Successfully");
+          fetchBooks(API);
+        } else if (xhr.status === 404) {
+          console.log("Book have the author you can't delete");
+        } else {
+          console.log("Deleted unsuccessfully");
+        }
+      };
+      xhr.send();
+    } else {
+      console.log("Deletion operation aborted");
+    }
+  };
+
   return (
     <>
       {loading && <h1>Loading...</h1>}
@@ -69,7 +90,12 @@ function ListComponent() {
                   <button className="update-btn">Update</button>
                 </td>
                 <td>
-                  <button className="delete-btn">Delete</button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => deleteRecord(books_id)}
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             );

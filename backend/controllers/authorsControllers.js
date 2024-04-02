@@ -166,14 +166,16 @@ const deleteAuthor = async (req, res) => {
 
   try {
     const author = await sequelize.query(
-      "Select * from authors where authors_id = ?",
+      "Select * from book_authors where author_id = ?",
       {
         type: QueryTypes.SELECT,
         replacements: [id],
       }
     );
-    if (author.length == 0) {
-      return res.status(404).send("author Not Found");
+    if (author.length != 0) {
+      return res
+        .status(404)
+        .send("Author have book bitch you cannot delete it.");
     }
     await sequelize.query(
       "DELETE FROM `authors` WHERE `authors`.`authors_id` = ?",
