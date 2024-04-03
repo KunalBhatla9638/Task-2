@@ -1,0 +1,89 @@
+div table {
+  margin-top: 2rem;
+}
+
+/* Responsive table */
+@media screen and (max-width: 600px) {
+  table {
+    border: 0;
+  }
+  table caption {
+    font-size: 1.3em;
+  }
+  table thead {
+    display: none;
+  }
+  table tr {
+    border-bottom: 3px solid #3498db;
+    display: block;
+    margin-bottom: 0.625em;
+  }
+  table td {
+    border-bottom: none;
+    display: block;
+    text-align: right;
+  }
+  table td:before {
+    content: attr(data-label);
+    float: left;
+    font-weight: bold;
+    text-transform: uppercase;
+  }
+}
+
+.search-div {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 15px;
+}
+
+.wrapper {
+  margin-top: 1rem;
+}
+
+.result-div {
+  flex: 2;
+}
+
+.result-div {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  align-items: start;
+  gap: 6px;
+}
+
+.input-div * {
+  margin: 4px 10px;
+}
+
+.update-div {
+  background-color: rgb(226, 246, 252);
+  width: fit-content;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  padding: 10px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 0px auto;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.update-div .edit-btn {
+  grid-column: 1/-1;
+  background-color: rgb(34, 185, 34);
+}
+
+.update-div .close-btn {
+  grid-column: 1/-1;
+  background-color: rgb(185, 34, 34);
+}
+
+textarea {
+  background-color: white;
+  color: black;
+}

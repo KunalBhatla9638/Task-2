@@ -1,9 +1,8 @@
-import React, { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import "./AddComponent.css";
+import React from "react";
+import { useState } from "react";
+import "./UpdatePage.css";
 
-function AddComponent() {
+const UpdatePage = () => {
   const [allInputFields, setAllInputFields] = useState({
     title: "",
     description: "",
@@ -45,48 +44,48 @@ function AddComponent() {
 
   return (
     <>
-      <div className="form-container">
+      <div className="wrapper">
         <form onSubmit={handleSubmit}>
-          <label>
-            Title:
+          <div className="update-div">
+            <label>Title:</label>
             <input
               type="text"
               name="title"
               value={allInputFields.title}
               onChange={handleChange}
             />
-          </label>
-          <label>
-            Description:
+            <label>Description:</label>
             <textarea
               name="description"
+              cols={10}
+              rows={10}
               value={allInputFields.description}
               onChange={handleChange}
             />
-          </label>
-          <label>
-            Publish Year:
+
+            <label>Publish Year:</label>
             <input
               type="text"
               name="publish_year"
               value={allInputFields.publish_year}
               onChange={handleChange}
             />
-          </label>
-          <label>
-            Quantity:
+
+            <label>Quantity:</label>
             <input
               type="text"
               name="quantity"
               value={allInputFields.quantity}
               onChange={handleChange}
             />
-          </label>
-          <button type="submit">Submit</button>
+            <button type="submit" className="edit-btn">
+              Submit
+            </button>
+          </div>
         </form>
       </div>
     </>
   );
-}
+};
 
-export default AddComponent;
+export default UpdatePage;

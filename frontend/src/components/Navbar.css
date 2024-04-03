@@ -1,0 +1,13 @@
+nav {
+  display: flex;
+  justify-content: space-around;
+  position: sticky;
+  background-color: gainsboro;
+  top: 0;
+}
+
+li {
+  text-decoration: none;
+  list-style-type: none;
+  font-size: 2rem;
+}

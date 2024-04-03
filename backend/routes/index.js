@@ -25,8 +25,14 @@ const {
   deletegenre,
 } = require("../controllers/genreControllers");
 
+//User Controller
+const { registerUser } = require("../controllers/userControllers");
+
 //Common Controller
 const { searchBook } = require("../controllers/commonControllers");
+
+//Upload --MiddleWare--
+const upload = require("../middleware/uploadImage");
 
 const router = express();
 
@@ -48,6 +54,9 @@ router.get("/genres", displayGenre);
 router.post("/insertgenre", insertgenre);
 router.patch("/updategenre/:id", updategenre);
 router.delete("/deletegenre/:id", deletegenre);
+
+//User Routes
+router.post("/registration", upload.single("uprofilepic"), registerUser);
 
 // Common Routes
 router.get("/search", searchBook);
