@@ -1,8 +1,11 @@
 import "./RegistrationPage.css";
 import { toast } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 import React, { useState } from "react";
 const RegistrationPage = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     uname: "",
     uemail: "",
@@ -42,16 +45,16 @@ const RegistrationPage = () => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4000/api/registration", true);
     //xhr.setRequestHeader("Content-Type", "application/json");
-    console.log(form);
     xhr.send(form);
     xhr.onload = () => {
       if (xhr.status == 200) {
         toast.success("Inserted Successfully");
-        console.log("Data Inserted Successfully");
+        navigate("/login");
       } else if (xhr.status === 409) {
         toast.error("Email is taken already");
-      } else if (xhr.status == 204) {
-        toast.error("Insert All Fields Properly");
+      } else if (xhr.status == 400) {
+        const error = JSON.parse(xhr.responseText);
+        toast.error(error.error);
       } else if (xhr.status == 550) {
         toast.error("Email expression is not valid");
       } else {
@@ -68,12 +71,12 @@ const RegistrationPage = () => {
     // xhr.send({ uname, uemail, upassword, uprofilepic });
 
     // Clear form fields
-    // setFormData({
-    //   uname: "",
-    //   uemail: "",
-    //   upassword: "",
-    //   uprofilepic: null,
-    // });
+    setFormData({
+      uname: "",
+      uemail: "",
+      upassword: "",
+      uprofilepic: null,
+    });
   };
 
   return (

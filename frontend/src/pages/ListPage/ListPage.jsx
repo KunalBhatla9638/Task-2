@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import "./ListPage.css";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useNavigate } from "react-router-dom";
 
 const API = "http://localhost:4000/api/books";
 
 function ListComponent() {
+  const navigate = useNavigate();
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [updateCardView, setUpdateCardView] = useState(false);
@@ -24,15 +26,36 @@ function ListComponent() {
     setAllInputFields({ ...allInputFields, [name]: value });
   };
 
-  const fetchBooks = async (api) => {
-    try {
-      const response = await fetch(API);
-      const data = await response.json();
-      setBooks(data);
-      setLoading(false);
-    } catch (err) {
-      console.log(err.message);
-    }
+  // const fetchBooks = async (api) => {
+  //   try {
+  //     const response = await fetch(API);
+  //     const data = await response.json();
+  //     setBooks(data);
+  //     setLoading(false);
+  //   } catch (err) {
+  //     console.log(err.message);
+  //   }
+  // };
+
+  const fetchBooks = () => {
+    let xhr = new XMLHttpRequest();
+    xhr.open("GET", API, true);
+    xhr.onload = () => {
+      if (xhr.status === 401) {
+        console.log("I am here");
+        // setLoading(false);
+        navigate("*");
+      } else if (xhr.status === 404) {
+        // setLoading(false);
+        toast.error(JSON.parse(xhr.responseText));
+      } else if (xhr.status >= 200 && xhr.status < 300) {
+        const books = JSON.parse(xhr.responseText);
+        setBooks(books);
+      } else {
+        console.error("Request failed with status:", xhr.status);
+      }
+    };
+    xhr.send(null);
   };
 
   useEffect(() => {

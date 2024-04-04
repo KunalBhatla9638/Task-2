@@ -11,14 +11,12 @@ import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import { Toaster } from "react-hot-toast";
-// import HomeComponent from "./pages/HomeComponent/HomeComponent";
-// import ListComponent from "./pages/ListComponent/ListComponent";
-// import NoFoundComponent from "./pages/NoFoundComponent/NoFoundComponent";
-// import AddComponent from "./pages/AddComponent/AddComponent";
+import { UserContextProvider } from "../context/UserContext";
 
 function App() {
   return (
     <div>
+      {/* <UserContextProvider> */}
       <ToastContainer />
       <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
       <Navbar />
@@ -31,6 +29,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="*" element={<NoFoundPage />} />
       </Routes>
+      {/* </UserContextProvider> */}
     </div>
   );
 }

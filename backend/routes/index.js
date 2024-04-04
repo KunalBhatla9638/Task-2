@@ -33,12 +33,14 @@ const { searchBook } = require("../controllers/commonControllers");
 
 //Upload --MiddleWare--
 const upload = require("../middleware/uploadImage");
+//Authorization --MiddleWare--
+const verifyToken = require("../middleware/authoriztion");
 
 const router = express();
 
 router.get("/", welcome);
 //Books Routes
-router.get("/books", displayBooks);
+router.get("/books", verifyToken, displayBooks);
 router.post("/insertbook", insertBook);
 router.patch("/updatebook/:id", updateBook);
 router.delete("/deletebook/:id", deleteBook);
