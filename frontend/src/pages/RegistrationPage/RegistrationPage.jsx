@@ -7,6 +7,7 @@ const RegistrationPage = () => {
     uname: "",
     uemail: "",
     upassword: "",
+    confirmpassword: "",
     uprofilepic: null,
   });
 
@@ -27,10 +28,22 @@ const RegistrationPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const form = new FormData();
+    form.append("uname", formData.uname);
+    form.append("uemail", formData.uemail);
+    form.append("upassword", formData.upassword);
+    form.append("uprofilepic", formData.uprofilepic);
+
+    if (formData.upassword !== formData.confirmpassword) {
+      return toast.error("Password not match...!");
+    }
+
     // console.log(formData);
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4000/api/registration", true);
-    xhr.setRequestHeader("Content-Type", "application/json");
+    //xhr.setRequestHeader("Content-Type", "application/json");
+    console.log(form);
+    xhr.send(form);
     xhr.onload = () => {
       if (xhr.status == 200) {
         toast.success("Inserted Successfully");
@@ -39,6 +52,8 @@ const RegistrationPage = () => {
         toast.error("Email is taken already");
       } else if (xhr.status == 204) {
         toast.error("Insert All Fields Properly");
+      } else if (xhr.status == 550) {
+        toast.error("Email expression is not valid");
       } else {
         toast.error("Something went wrong");
         console.log(xhr.responseText);
@@ -47,9 +62,9 @@ const RegistrationPage = () => {
     };
 
     // console.log(formData.uprofilepic);
-    console.log(formData.uprofilepic);
+    // console.log(formData.uprofilepic);
 
-    xhr.send(JSON.stringify(formData));
+    // xhr.send(JSON.stringify(formData));
     // xhr.send({ uname, uemail, upassword, uprofilepic });
 
     // Clear form fields
@@ -90,7 +105,17 @@ const RegistrationPage = () => {
             type="password"
             id="upassword"
             name="upassword"
-            value={formData.upassword}
+            // value={formData.upassword}
+            onChange={handleChange}
+            required
+          />
+
+          <label htmlFor="confirmpassword">Confirm Password:</label>
+          <input
+            type="password"
+            id="confirmpassword"
+            name="confirmpassword"
+            // value={formData.confirmpassword}
             onChange={handleChange}
             required
           />

@@ -26,7 +26,7 @@ const {
 } = require("../controllers/genreControllers");
 
 //User Controller
-const { registerUser } = require("../controllers/userControllers");
+const { registerUser, loginUser } = require("../controllers/userControllers");
 
 //Common Controller
 const { searchBook } = require("../controllers/commonControllers");
@@ -57,6 +57,7 @@ router.delete("/deletegenre/:id", deletegenre);
 
 //User Routes
 router.post("/registration", upload.single("uprofilepic"), registerUser);
+router.post("/login", loginUser);
 
 // Common Routes
 router.get("/search", searchBook);
