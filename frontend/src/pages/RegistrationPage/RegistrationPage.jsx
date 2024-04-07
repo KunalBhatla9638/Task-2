@@ -134,6 +134,9 @@ const RegistrationPage = () => {
 
           <input type="submit" value="Submit" />
         </form>
+        <p>
+          Already have an account? <a href="/login">Login</a>.
+        </p>
       </div>
     </>
   );

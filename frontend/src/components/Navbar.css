@@ -1,6 +1,7 @@
 nav {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   position: sticky;
   background-color: gainsboro;
   top: 0;
@@ -10,4 +11,16 @@ li {
   text-decoration: none;
   list-style-type: none;
   font-size: 2rem;
+}
+
+.circular-image {
+  width: 70px; /* Adjust the width as needed */
+  height: 70px; /* Adjust the height as needed */
+  border-radius: 50%; /* This makes the image round */
+  overflow: hidden; /* This ensures the image stays within the round border */
+}
+.circular-image img {
+  width: 100%; /* Make the image fill the circular container */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Remove any default spacing */
 }

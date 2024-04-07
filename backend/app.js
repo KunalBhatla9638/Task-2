@@ -1,6 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 // const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
 
@@ -17,6 +18,7 @@ app.use(
   })
 );
 app.use(express.json());
+app.use("/api/public", express.static(path.join(__dirname, "public/assets")));
 app.use("/api", require("./routes"));
 
 app.listen(port, () => {

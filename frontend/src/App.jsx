@@ -16,20 +16,52 @@ import { UserContextProvider } from "../context/UserContext";
 function App() {
   return (
     <div>
-      {/* <UserContextProvider> */}
-      <ToastContainer />
-      <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
-      <Navbar />
-      <Routes>
-        <Route index exact path="/" element={<HomePage />} />
-        <Route path="/list" element={<ListPage />} />
-        <Route path="/add" element={<AddPage />} />
-        <Route path="/update" element={<UpdatePage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="*" element={<NoFoundPage />} />
-      </Routes>
-      {/* </UserContextProvider> */}
+      <UserContextProvider>
+        <ToastContainer />
+        <Toaster position="top-right" toastOptions={{ duration: 2000 }} />
+        {/* <Navbar /> */}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <Navbar />
+                <HomePage />
+              </>
+            }
+          />
+          <Route
+            path="/list"
+            element={
+              <>
+                <Navbar />
+                <ListPage />
+              </>
+            }
+          />
+          <Route
+            path="/add"
+            element={
+              <>
+                <Navbar />
+                <AddPage />
+              </>
+            }
+          />
+          <Route
+            path="/update"
+            element={
+              <>
+                <Navbar />
+                <UpdatePage />
+              </>
+            }
+          />
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route index exact path="/login" element={<LoginPage />} />
+          <Route path="*" element={<NoFoundPage />} />
+        </Routes>
+      </UserContextProvider>
     </div>
   );
 }

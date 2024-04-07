@@ -40,7 +40,8 @@ const router = express();
 
 router.get("/", welcome);
 //Books Routes
-router.get("/books", verifyToken, displayBooks);
+// router.get("/books", verifyToken, displayBooks);
+router.get("/books", displayBooks);
 router.post("/insertbook", insertBook);
 router.patch("/updatebook/:id", updateBook);
 router.delete("/deletebook/:id", deleteBook);

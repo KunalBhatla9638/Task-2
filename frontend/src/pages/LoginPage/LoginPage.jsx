@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./LoginPage.css";
 import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../../context/UserContext";
 
 const LoginPage = () => {
+  const { setProfile } = useContext(UserContext);
   const [formData, setFormData] = useState({
     uemail: "",
     upassword: "",
@@ -16,6 +19,7 @@ const LoginPage = () => {
     });
   };
 
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const xhr = new XMLHttpRequest();
@@ -25,6 +29,10 @@ const LoginPage = () => {
     xhr.onload = () => {
       if (xhr.status === 200) {
         toast.success("Login Successful");
+        const userObj = JSON.parse(xhr.responseText);
+        const userImage = userObj.user.uprofilepic;
+        setProfile(userImage);
+        navigate("/list");
       } else if (xhr.status === 404) {
         // const error = JSON.parse(xhr.responseText);
         toast.error(JSON.parse(xhr.responseText).error);
@@ -70,6 +78,10 @@ const LoginPage = () => {
 
           <input type="submit" value="Submit" />
         </form>
+        <p>
+          You don't have an account.
+          <a href="/registration">Create one</a>.
+        </p>
       </div>
     </>
   );

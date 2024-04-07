@@ -10,7 +10,7 @@ const API = "http://localhost:4000/api/books";
 function ListComponent() {
   const navigate = useNavigate();
   const [books, setBooks] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [updateCardView, setUpdateCardView] = useState(false);
   const [id, setId] = useState(-1);
 
@@ -43,8 +43,9 @@ function ListComponent() {
     xhr.onload = () => {
       if (xhr.status === 401) {
         console.log("I am here");
-        // setLoading(false);
-        navigate("*");
+        // navigate("/login");
+        setLoading(true);
+        // navigate("*");
       } else if (xhr.status === 404) {
         // setLoading(false);
         toast.error(JSON.parse(xhr.responseText));
