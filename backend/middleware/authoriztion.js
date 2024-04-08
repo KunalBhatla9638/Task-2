@@ -13,6 +13,7 @@ const verifyToken = (req, res, next) => {
       }
       //res.status(200).json(user);
       req.user = user;
+      console.log(user);
       console.log("I got processed");
       next();
     });

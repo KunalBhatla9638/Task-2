@@ -25,6 +25,7 @@ const LoginPage = () => {
     const xhr = new XMLHttpRequest();
     xhr.open("POST", "http://localhost:4000/api/login", true);
     xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.withCredentials = true;
     xhr.send(JSON.stringify(formData));
     xhr.onload = () => {
       if (xhr.status === 200) {

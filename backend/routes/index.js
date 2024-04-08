@@ -34,14 +34,14 @@ const { searchBook } = require("../controllers/commonControllers");
 //Upload --MiddleWare--
 const upload = require("../middleware/uploadImage");
 //Authorization --MiddleWare--
-const verifyToken = require("../middleware/authoriztion");
 
+const verifyToken = require("../middleware/authoriztion.js");
 const router = express();
 
 router.get("/", welcome);
 //Books Routes
-// router.get("/books", verifyToken, displayBooks);
-router.get("/books", displayBooks);
+router.get("/books", verifyToken, displayBooks);
+// router.get("/books", displayBooks);
 router.post("/insertbook", insertBook);
 router.patch("/updatebook/:id", updateBook);
 router.delete("/deletebook/:id", deleteBook);
@@ -61,6 +61,12 @@ router.delete("/deletegenre/:id", deletegenre);
 //User Routes
 router.post("/registration", upload.single("uprofilepic"), registerUser);
 router.post("/login", loginUser);
+router.get("/profile", verifyToken, (req, res) => {
+  const userData = req.user;
+  if (userData) {
+    res.status(200).json(userData);
+  }
+});
 
 // Common Routes
 router.get("/search", searchBook);

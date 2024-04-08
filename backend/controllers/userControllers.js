@@ -3,7 +3,6 @@ const sequelize = require("../utiles/databaseConnection");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { comparePassword } = require("../helpers/auth");
-
 //Registration endpoint
 const registerUser = async (req, res) => {
   const { uname, uemail, upassword } = req.body;
@@ -128,7 +127,7 @@ const loginUser = async (req, res) => {
     jwt.sign(
       validUser,
       process.env.JWT_SECRET,
-      { expiresIn: "10s" },
+      { expiresIn: "1h" },
       (err, authToken) => {
         if (err) {
           return res
@@ -149,12 +148,17 @@ const loginUser = async (req, res) => {
         // }
 
         const cookieOptions = {
-          expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
           httpOnly: true,
+          secure: true,
+          expires: new Date(Date.now() + 90 * 24 * 60 * 60 * 1000),
+          sameSite: "none",
         };
         return res
+          .status(200)
           .cookie("authToken", authToken, cookieOptions)
           .json({ user: validUser, authToken });
+
+        // return res.status(200).json({ user: validUser, authToken });
       }
     );
   } catch (err) {

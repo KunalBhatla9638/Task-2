@@ -40,10 +40,12 @@ function ListComponent() {
   const fetchBooks = () => {
     let xhr = new XMLHttpRequest();
     xhr.open("GET", API, true);
+    xhr.withCredentials = true;
     xhr.onload = () => {
       if (xhr.status === 401) {
         console.log("I am here");
         // navigate("/login");
+
         setLoading(true);
         // navigate("*");
       } else if (xhr.status === 404) {
@@ -51,6 +53,7 @@ function ListComponent() {
         toast.error(JSON.parse(xhr.responseText));
       } else if (xhr.status >= 200 && xhr.status < 300) {
         const books = JSON.parse(xhr.responseText);
+        console.log("books", books);
         setBooks(books);
       } else {
         console.error("Request failed with status:", xhr.status);
